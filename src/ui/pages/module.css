@@ -1,0 +1,52 @@
+.module-page {
+  animation: sckFadeIn 0.4s ease both;
+}
+
+.module-panel {
+  background: var(--sck-surface) !important;
+  border: 1px solid var(--sck-border) !important;
+  border-radius: var(--sck-radius) !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+  height: 100%;
+}
+
+.module-panel .ant-card-head {
+  border-bottom-color: var(--sck-border);
+  color: var(--sck-text);
+}
+
+.semaforo-card {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px;
+  border: 1px solid var(--sck-border);
+  border-radius: 12px;
+  background: var(--sck-surface-muted);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.semaforo-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--sck-accent);
+}
+
+.semaforo-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 4px color-mix(in srgb, currentColor 20%, transparent);
+}
+
+@keyframes sckFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

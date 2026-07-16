@@ -1,29 +1,29 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../config/config.js';
+import { findDemoAccount } from '../data/demoAccounts.js';
+
 console.log('[userServices] API_BASE_URL:', API_BASE_URL);
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 6000,
+  timeout: 4000,
   headers: { 'Content-Type': 'application/json' }
 });
 
 api.interceptors.request.use(cfg => { console.log('[userServices] ->', cfg.method?.toUpperCase(), cfg.url); return cfg; });
 api.interceptors.response.use(r => { console.log('[userServices] <-', r.status, r.config.url); return r; }, e => { console.log('[userServices] !! error', e.code, e.message); return Promise.reject(e); });
 
-// Interceptor request: siempre devolver config
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('authToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    return config; // IMPORTANTE: siempre retornar
+    return config;
   },
   (error) => Promise.reject(error)
 );
 
-// Interceptor response: limpiar sesión si 401
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -41,8 +41,32 @@ function persistSession(user, token) {
   try { window.dispatchEvent(new Event('session-changed')); } catch {}
 }
 
+function loginWithDemo(email, password) {
+  const account = findDemoAccount(email, password);
+  if (!account) {
+    return {
+      success: false,
+      error: 'Credenciales inválidas. Usa una cuenta de demostración (Admin o Usuario).',
+    };
+  }
+  const user = {
+    id: account.id,
+    name: account.name,
+    email: account.email,
+    role: account.role,
+    title: account.title,
+  };
+  const token = `demo-token-${account.role}-${Date.now()}`;
+  persistSession(user, token);
+  return { success: true, user, token, demo: true };
+}
+
 export const userServices = {
   async login(email, password) {
+    // Prioridad demo: cuentas oficiales del Dashboard Ejecutivo
+    const demo = loginWithDemo(email, password);
+    if (demo.success) return demo;
+
     try {
       const res = await api.post('/auth/login', { email, password });
       const data = res.data;
@@ -50,23 +74,15 @@ export const userServices = {
         persistSession(data.user, data.token);
         return { success: true, user: data.user, token: data.token };
       }
-      return { success: false, error: data?.error || 'Credenciales inválidas' };
-    } catch (err) {
-      // Fallback a test-login solo si no hay respuesta del server
-      if (!err.response) {
-        try {
-          const res2 = await api.post('/auth/test-login', { email, password });
-            const d2 = res2.data;
-            if (d2?.success) {
-              persistSession(d2.user, d2.token);
-              return { success: true, user: d2.user, token: d2.token, fallback: true };
-            }
-            return { success: false, error: d2?.error || 'Login fallback fallido' };
-        } catch {
-          return { success: false, error: 'Servidor no responde' };
-        }
-      }
-      return { success: false, error: err.response?.data?.error || 'Error en login' };
+      return {
+        success: false,
+        error: data?.error || 'Credenciales inválidas. Usa admin@sckorasystems.com o usuario@sckorasystems.com',
+      };
+    } catch {
+      return {
+        success: false,
+        error: 'Credenciales inválidas. Usa una cuenta de demostración (Admin o Usuario).',
+      };
     }
   },
 
@@ -111,11 +127,11 @@ export const userServices = {
   },
 
   logout() {
-    // Comportamiento simple: limpiar sesión y marcar aviso
     try {
       localStorage.removeItem('authToken');
       localStorage.removeItem('userData');
       localStorage.setItem('justLoggedOut', '1');
+      window.dispatchEvent(new Event('session-changed'));
     } catch {}
     return { success: true };
   },

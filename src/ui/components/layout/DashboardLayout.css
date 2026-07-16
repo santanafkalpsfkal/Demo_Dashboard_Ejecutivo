@@ -1,0 +1,65 @@
+.dashboard-shell {
+  min-height: 100vh;
+  background: transparent !important;
+}
+
+.dashboard-shell__main {
+  min-width: 0;
+  background: transparent !important;
+}
+
+.dashboard-shell__content {
+  padding: 22px 28px 36px;
+  min-height: calc(100vh - 72px);
+  background: transparent;
+}
+
+.dashboard-shell__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.dashboard-shell__inner > .module-page {
+  animation: sckFadeIn 0.4s ease both;
+}
+
+.virtualito-slot {
+  position: fixed;
+  right: 20px;
+  bottom: 48px;
+  width: 360px;
+  max-height: 520px;
+  background: var(--sck-surface);
+  border: 1px solid var(--sck-border);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+  z-index: 120;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.virtualito-slot.is-open {
+  display: flex;
+}
+
+.virtualito-slot__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--sck-border);
+  font-weight: 700;
+}
+
+.virtualito-slot__body {
+  flex: 1;
+  padding: 12px;
+  min-height: 200px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-shell__content {
+    padding: 16px 12px 28px;
+  }
+}

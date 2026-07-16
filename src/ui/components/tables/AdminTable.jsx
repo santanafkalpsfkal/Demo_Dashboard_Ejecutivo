@@ -466,7 +466,7 @@ const AdminTable = () => {
               { type: 'email', message: 'Por favor ingrese un email válido' }
             ]}
           >
-            <Input placeholder="Ej: usuario@evaliq.com" />
+            <Input placeholder="Ej: usuario@sckorasystems.com" />
           </Form.Item>
 
           <Form.Item

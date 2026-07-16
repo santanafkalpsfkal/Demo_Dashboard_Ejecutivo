@@ -1,5 +1,5 @@
 {
-  "name": "evaliq",
+  "name": "dashboard-ejecutivo-sckora",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -15,10 +15,11 @@
     "bcryptjs": "^3.0.3",
     "chart.js": "^4.4.1",
     "html2canvas": "^1.4.1",
-  "jspdf": "^2.5.1",
+    "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
     "mongoose": "^8.19.3",
     "react": "^19.1.1",
+    "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.5",
     "react-toastify": "^10.0.0"

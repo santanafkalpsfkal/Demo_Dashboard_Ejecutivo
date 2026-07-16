@@ -1,0 +1,23 @@
+.enterprise-table {
+  background: var(--sck-surface);
+  border: 1px solid var(--sck-border);
+  border-radius: var(--sck-radius);
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+.enterprise-table__toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.enterprise-table__title {
+  margin: 0;
+  color: var(--sck-text);
+  font-size: 15px;
+  font-weight: 700;
+}

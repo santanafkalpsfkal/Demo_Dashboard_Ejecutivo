@@ -1,0 +1,124 @@
+.app-header-exec {
+  background: var(--sck-header-bg) !important;
+  border-bottom: 1px solid var(--sck-border);
+  padding: 0 24px !important;
+  height: auto !important;
+  min-height: 72px;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  backdrop-filter: blur(10px);
+}
+
+.app-header-exec__left {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-header-exec__menu-btn {
+  display: none;
+  color: var(--sck-text) !important;
+}
+
+@media (max-width: 991px) {
+  .app-header-exec__menu-btn {
+    display: inline-flex;
+  }
+}
+
+.app-header-exec__greet {
+  margin: 0 !important;
+  color: var(--sck-text) !important;
+  font-size: 18px !important;
+  line-height: 1.3 !important;
+  text-transform: capitalize;
+}
+
+.app-header-exec__meta {
+  color: var(--sck-text-secondary) !important;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.app-header-exec__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-header-exec__search {
+  width: 280px;
+  border-radius: 999px !important;
+}
+
+.app-header-exec__icon-btn {
+  color: var(--sck-text) !important;
+  width: 40px;
+  height: 40px;
+}
+
+.app-header-exec__profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--sck-accent-soft);
+  border: 1px solid var(--sck-border);
+  border-radius: 999px;
+  padding: 4px 12px 4px 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: inherit;
+}
+
+.app-header-exec__profile:hover {
+  border-color: var(--sck-accent);
+}
+
+.app-header-exec__profile-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+}
+
+.app-header-exec__profile-text .name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sck-text);
+}
+
+.app-header-exec__profile-text .role {
+  font-size: 11px;
+  color: var(--sck-text-secondary);
+}
+
+.app-header-exec__notif-panel {
+  width: 300px;
+  background: var(--sck-surface);
+  border: 1px solid var(--sck-border);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+.app-header-exec__notif-panel .is-unread {
+  background: var(--sck-accent-soft);
+  border-radius: 8px;
+  padding-inline: 8px;
+}
+
+@media (max-width: 992px) {
+  .app-header-exec__search {
+    display: none;
+  }
+
+  .app-header-exec__profile-text {
+    display: none;
+  }
+}

@@ -40,12 +40,12 @@ const PDFExporter = ({ evaluations, loading = false }) => {
       // Encabezado
   pdf.setFontSize(22);
       pdf.setTextColor(24, 144, 255);
-      pdf.text('EvaliQ', pageWidth / 2, yPosition, { align: 'center' });
+      pdf.text('Dashboard Ejecutivo', pageWidth / 2, yPosition, { align: 'center' });
       
   pdf.setFontSize(14);
   pdf.setTextColor(102, 102, 102);
   yPosition += 9;
-  pdf.text('Reporte de Evaluaciones de Calidad de Software', pageWidth / 2, yPosition, { align: 'center' });
+  pdf.text('Reporte ejecutivo — SCKora Systems', pageWidth / 2, yPosition, { align: 'center' });
       
       pdf.setFontSize(10);
       pdf.setTextColor(153, 153, 153);
@@ -179,7 +179,7 @@ const PDFExporter = ({ evaluations, loading = false }) => {
         ]);
 
         autoTable(pdf, {
-          head: [['Proyecto','Evaluador','Fecha','Puntuación','Estado']],
+          head: [['Proyecto','Responsable','Fecha','Puntuación','Estado']],
           body,
           startY: yPosition + 4,
           theme: 'grid',
@@ -203,7 +203,7 @@ const PDFExporter = ({ evaluations, loading = false }) => {
       if (evaluations.length > 0) {
   pdf.setFontSize(14);
   pdf.setTextColor(24, 144, 255);
-  pdf.text('Análisis por Criterios ISO 25010', 20, yPosition);
+  pdf.text('Análisis de indicadores estratégicos', 20, yPosition);
   yPosition += 8;
 
         const criteriaList = [
@@ -270,12 +270,12 @@ const PDFExporter = ({ evaluations, loading = false }) => {
         pdf.setFontSize(8);
         pdf.setTextColor(150, 150, 150);
         pdf.text(`Página ${i} de ${pageCount}`, pageWidth - 35, 290);
-        pdf.text('EvaliQ - Calidad de Software', 20, 290);
+        pdf.text('Desarrollado por SCKora Systems', 20, 290);
       }
 
       // Guardar PDF
       const date = new Date().toISOString().split('T')[0];
-      pdf.save(`reporte-evaliq-${date}.pdf`);
+      pdf.save(`reporte-ejecutivo-sckora-${date}.pdf`);
       toast.success('Reporte exportado correctamente');
     } catch (error) {
       console.error('Error al exportar PDF:', error);
