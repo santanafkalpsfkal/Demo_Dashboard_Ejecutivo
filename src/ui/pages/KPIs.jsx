@@ -35,7 +35,7 @@ export default function KPIsPage() {
   ];
 
   return (
-    <div className="module-page">
+    <div className="module-page" data-tour="page-kpis">
       <PageHeader
         title="KPIs & OKRs"
         subtitle="Metas estratégicas, cumplimiento y semáforos ejecutivos."

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Drawer, Grid } from 'antd';
-import { useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import AppHeader from './AppHeader';
 import AppFooter, { Watermark } from './AppFooter';
-import { VirtualitoSlot, useVirtualito } from '../../../core/virtualito/VirtualitoContext';
 import './DashboardLayout.css';
 
 const { Content } = Layout;
@@ -14,12 +12,6 @@ export default function DashboardLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
   const screens = useBreakpoint();
   const isMobile = !screens.lg;
-  const location = useLocation();
-  const { setContextPage } = useVirtualito();
-
-  useEffect(() => {
-    setContextPage({ path: location.pathname, title: document.title });
-  }, [location.pathname, setContextPage]);
 
   useEffect(() => {
     if (isMobile) setCollapsed(true);
@@ -54,7 +46,6 @@ export default function DashboardLayout({ children }) {
       </Layout>
 
       <Watermark />
-      <VirtualitoSlot />
     </Layout>
   );
 }

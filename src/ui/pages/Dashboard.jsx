@@ -54,14 +54,14 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="module-page">
+    <div className="module-page" data-tour="page-dashboard">
       <PageHeader
         title="Dashboard General"
         subtitle="Visión ejecutiva de indicadores, alertas y desempeño en tiempo real."
         breadcrumb={['SCKora', 'Dashboard']}
       />
 
-      <Row gutter={[16, 16]}>
+      <Row gutter={[16, 16]} data-tour="dashboard-kpis">
         {kpiSummary.map((kpi) => (
           <Col xs={24} sm={12} lg={8} xl={6} key={kpi.key}>
             <KpiCard {...kpi} />
@@ -69,7 +69,7 @@ export default function Dashboard() {
         ))}
       </Row>
 
-      <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+      <Row gutter={[16, 16]} style={{ marginTop: 16 }} data-tour="dashboard-charts">
         <Col xs={24} lg={16}>
           <ChartCard title="Ingresos diarios" subtitle="Últimos 30 días">
             <LineChartWidget

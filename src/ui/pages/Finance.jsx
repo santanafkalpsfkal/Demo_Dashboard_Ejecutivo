@@ -8,7 +8,7 @@ import './module.css';
 
 export default function Finance() {
   return (
-    <div className="module-page">
+    <div className="module-page" data-tour="page-finance">
       <PageHeader
         title="Finanzas"
         subtitle="Ingresos, egresos, utilidad, rentabilidad y flujo de caja."

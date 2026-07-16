@@ -51,7 +51,7 @@ export default function Sales() {
   ];
 
   return (
-    <div className="module-page">
+    <div className="module-page" data-tour="page-sales">
       <PageHeader
         title="Ventas"
         subtitle="Facturación, productos, servicios, clientes y top vendedores."

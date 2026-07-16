@@ -33,3 +33,10 @@
   font-weight: 600;
   user-select: none;
 }
+
+/* Deja espacio visual respecto al FAB de Virtualito */
+@media (min-width: 481px) {
+  .sck-watermark {
+    right: 100px;
+  }
+}

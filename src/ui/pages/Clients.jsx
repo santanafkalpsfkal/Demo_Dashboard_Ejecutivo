@@ -57,7 +57,7 @@ export default function Clients() {
   ];
 
   return (
-    <div className="module-page">
+    <div className="module-page" data-tour="page-clients">
       <PageHeader
         title="Clientes"
         subtitle="Altas, retención, segmentación y valor promedio del portafolio."

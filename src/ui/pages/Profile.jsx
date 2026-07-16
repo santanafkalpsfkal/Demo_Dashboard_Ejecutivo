@@ -11,7 +11,7 @@ export default function Profile() {
   const user = userServices.getCurrentUser();
 
   return (
-    <div className="module-page">
+    <div className="module-page" data-tour="page-profile">
       <PageHeader
         title="Mi perfil"
         subtitle="Información del usuario ejecutivo en la plataforma."

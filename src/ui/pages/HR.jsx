@@ -47,7 +47,7 @@ export default function HR() {
   ];
 
   return (
-    <div className="module-page">
+    <div className="module-page" data-tour="page-hr">
       <PageHeader
         title="Recursos Humanos"
         subtitle="Empleados, asistencia, productividad, vacaciones y ausencias."

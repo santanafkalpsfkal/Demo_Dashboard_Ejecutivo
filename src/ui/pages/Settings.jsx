@@ -5,6 +5,7 @@ import PageHeader from '../components/common/PageHeader';
 import { useTheme } from '../../theme/ThemeContext';
 import { COMPANY } from '../../data/mock/executiveData';
 import { userServices } from '../../services/userServices';
+import { useVirtualitoStore } from '../components/virtualito/virtualitoStore';
 import './module.css';
 
 export default function Settings() {
@@ -35,7 +36,7 @@ export default function Settings() {
   };
 
   return (
-    <div className="module-page">
+    <div className="module-page" data-tour="page-settings">
       <PageHeader
         title="Configuración"
         subtitle="Empresa, perfil, tema, idioma y preferencias de la plataforma."
@@ -52,7 +53,7 @@ export default function Settings() {
 
       <Row gutter={[16, 16]}>
         <Col xs={24} lg={12}>
-          <Card className="module-panel" bordered={false} title="Empresa">
+          <Card className="module-panel" bordered={false} title="Empresa" data-tour="settings-company">
             <Form layout="vertical" initialValues={{ company: COMPANY.name, product: COMPANY.product, email: COMPANY.email }}>
               <Form.Item label="Empresa" name="company">
                 <Input />
@@ -63,7 +64,13 @@ export default function Settings() {
               <Form.Item label="Contacto" name="email">
                 <Input />
               </Form.Item>
-              <Button type="primary" onClick={() => message.success('Datos de empresa actualizados (demo)')}>
+              <Button
+                type="primary"
+                onClick={() => {
+                  message.success('Datos de empresa actualizados (demo)');
+                  useVirtualitoStore.getState().advise('guardar');
+                }}
+              >
                 Guardar empresa
               </Button>
             </Form>
@@ -85,17 +92,19 @@ export default function Settings() {
         </Col>
 
         <Col xs={24} lg={12}>
-          <Card className="module-panel" bordered={false} title="Tema visual">
+          <Card className="module-panel" bordered={false} title="Tema visual" data-tour="settings-themes">
             <Typography.Paragraph type="secondary">
               Cuatro temas corporativos SCKora. Cada uno aplica tipografía Google Fonts coherente.
             </Typography.Paragraph>
             <Radio.Group value={themeId} onChange={(e) => setTheme(e.target.value)} style={{ width: '100%' }}>
               <Space direction="vertical" style={{ width: '100%' }}>
                 {Object.values(themes).map((t) => (
-                  <Radio.Button key={t.id} value={t.id} style={{ width: '100%', height: 'auto', padding: '10px 14px' }}>
-                    <strong>{t.name}</strong>
-                    <div style={{ fontSize: 12, opacity: 0.75 }}>{t.fontFamily.replace(/'/g, '').split(',')[0]}</div>
-                  </Radio.Button>
+                  <div key={t.id} data-tour={`theme-${t.id}`}>
+                    <Radio.Button value={t.id} style={{ width: '100%', height: 'auto', padding: '10px 14px' }}>
+                      <strong>{t.name}</strong>
+                      <div style={{ fontSize: 12, opacity: 0.75 }}>{t.fontFamily.replace(/'/g, '').split(',')[0]}</div>
+                    </Radio.Button>
+                  </div>
                 ))}
               </Space>
             </Radio.Group>
@@ -103,7 +112,7 @@ export default function Settings() {
         </Col>
 
         <Col xs={24} lg={12}>
-          <Card className="module-panel" bordered={false} title="Idioma y preferencias">
+          <Card className="module-panel" bordered={false} title="Idioma y preferencias" data-tour="settings-prefs">
             <Form
               layout="vertical"
               initialValues={{

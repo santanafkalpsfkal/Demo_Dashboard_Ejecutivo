@@ -22,19 +22,27 @@ import './Sidebar.css';
 
 const { Sider } = Layout;
 
+function navItem(key, icon, label, tourId) {
+  return {
+    key,
+    icon,
+    label: <span data-tour={tourId}>{label}</span>,
+  };
+}
+
 const NAV_BASE = [
-  { key: '/dashboard', icon: <DashboardOutlined />, label: 'Dashboard General' },
-  { key: '/analytics', icon: <BarChartOutlined />, label: 'Analítica' },
-  { key: '/sales', icon: <ShoppingOutlined />, label: 'Ventas' },
-  { key: '/clients', icon: <TeamOutlined />, label: 'Clientes' },
-  { key: '/finance', icon: <DollarOutlined />, label: 'Finanzas' },
-  { key: '/hr', icon: <UserOutlined />, label: 'Recursos Humanos' },
-  { key: '/operations', icon: <ClusterOutlined />, label: 'Operaciones' },
-  { key: '/kpis', icon: <AimOutlined />, label: 'KPIs & OKRs' },
-  { key: '/reports', icon: <FileTextOutlined />, label: 'Reportes' },
+  navItem('/dashboard', <DashboardOutlined />, 'Dashboard General', 'nav-dashboard'),
+  navItem('/analytics', <BarChartOutlined />, 'Analítica', 'nav-analytics'),
+  navItem('/sales', <ShoppingOutlined />, 'Ventas', 'nav-sales'),
+  navItem('/clients', <TeamOutlined />, 'Clientes', 'nav-clients'),
+  navItem('/finance', <DollarOutlined />, 'Finanzas', 'nav-finance'),
+  navItem('/hr', <UserOutlined />, 'Recursos Humanos', 'nav-hr'),
+  navItem('/operations', <ClusterOutlined />, 'Operaciones', 'nav-operations'),
+  navItem('/kpis', <AimOutlined />, 'KPIs & OKRs', 'nav-kpis'),
+  navItem('/reports', <FileTextOutlined />, 'Reportes', 'nav-reports'),
 ];
 
-const NAV_ADMIN = { key: '/settings', icon: <SettingOutlined />, label: 'Configuración' };
+const NAV_ADMIN = navItem('/settings', <SettingOutlined />, 'Configuración', 'nav-settings');
 
 export default function Sidebar({ collapsed, onCollapse, onNavigate }) {
   const navigate = useNavigate();
@@ -42,10 +50,7 @@ export default function Sidebar({ collapsed, onCollapse, onNavigate }) {
   const user = userServices.getCurrentUser();
   const isAdmin = user?.role === 'admin';
 
-  const NAV = useMemo(
-    () => (isAdmin ? [...NAV_BASE, NAV_ADMIN] : NAV_BASE),
-    [isAdmin]
-  );
+  const NAV = useMemo(() => (isAdmin ? [...NAV_BASE, NAV_ADMIN] : NAV_BASE), [isAdmin]);
 
   const selected = useMemo(() => {
     const match = NAV.find((n) => location.pathname.startsWith(n.key));
@@ -67,7 +72,7 @@ export default function Sidebar({ collapsed, onCollapse, onNavigate }) {
       breakpoint="lg"
       onBreakpoint={(broken) => onCollapse?.(broken)}
     >
-      <div className="app-sidebar__brand" onClick={() => go('/dashboard')}>
+      <div className="app-sidebar__brand" data-tour="sidebar-brand" onClick={() => go('/dashboard')}>
         <img src={collapsed ? icon : logo} alt="SCKora Systems" className="app-sidebar__logo" />
         {!collapsed && (
           <div className="app-sidebar__brand-text">
@@ -86,13 +91,11 @@ export default function Sidebar({ collapsed, onCollapse, onNavigate }) {
         className="app-sidebar__menu"
       />
 
-      {!collapsed && (
-        <div className="app-sidebar__role">
-          <span className={`app-sidebar__role-pill ${isAdmin ? 'is-admin' : 'is-user'}`}>
-            {isAdmin ? 'Admin' : 'Usuario'}
-          </span>
-        </div>
-      )}
+      <div className="app-sidebar__role" data-tour="sidebar-role">
+        <span className={`app-sidebar__role-pill ${isAdmin ? 'is-admin' : 'is-user'}`}>
+          {collapsed ? (isAdmin ? 'A' : 'U') : isAdmin ? 'Admin' : 'Usuario'}
+        </span>
+      </div>
 
       <div className="app-sidebar__footer">
         <Tooltip title={collapsed ? 'Expandir' : 'Colapsar'} placement="right">

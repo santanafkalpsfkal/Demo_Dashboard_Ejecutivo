@@ -121,7 +121,7 @@ export default function Reports() {
   ];
 
   return (
-    <div className="module-page">
+    <div className="module-page" data-tour="page-reports">
       <PageHeader
         title="Reportes"
         subtitle="Catálogo de reportes ejecutivos con exportación PDF y Excel simulada."

@@ -60,7 +60,7 @@ export default function Login() {
       <div className="login-page__shell">
         <aside className="login-page__hero">
           <div className="login-page__hero-glow" aria-hidden />
-          <div className="login-page__hero-content">
+          <div className="login-page__hero-content" data-tour="login-brand">
             <img src={logo} alt="SCKora Systems" className="login-page__logo" />
             <Tag className="login-page__badge" icon={<SafetyCertificateOutlined />}>
               Demo corporativa
@@ -109,51 +109,53 @@ export default function Login() {
               />
             )}
 
-            <Form
-              form={form}
-              layout="vertical"
-              onFinish={onLogin}
-              requiredMark={false}
-              className="login-page__form"
-            >
-              <Form.Item
-                name="email"
-                label="Correo corporativo"
-                rules={[
-                  { required: true, message: 'Ingresa tu correo' },
-                  { type: 'email', message: 'Correo inválido' },
-                ]}
+            <div data-tour="login-form">
+              <Form
+                form={form}
+                layout="vertical"
+                onFinish={onLogin}
+                requiredMark={false}
+                className="login-page__form"
               >
-                <Input
+                <Form.Item
+                  name="email"
+                  label="Correo corporativo"
+                  rules={[
+                    { required: true, message: 'Ingresa tu correo' },
+                    { type: 'email', message: 'Correo inválido' },
+                  ]}
+                >
+                  <Input
+                    size="large"
+                    prefix={<UserOutlined />}
+                    placeholder="admin@sckorasystems.com"
+                    autoComplete="username"
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="password"
+                  label="Contraseña"
+                  rules={[{ required: true, message: 'Ingresa tu contraseña' }]}
+                >
+                  <Input.Password
+                    size="large"
+                    prefix={<LockOutlined />}
+                    placeholder="••••••••"
+                    autoComplete="current-password"
+                  />
+                </Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
                   size="large"
-                  prefix={<UserOutlined />}
-                  placeholder="admin@sckorasystems.com"
-                  autoComplete="username"
-                />
-              </Form.Item>
-              <Form.Item
-                name="password"
-                label="Contraseña"
-                rules={[{ required: true, message: 'Ingresa tu contraseña' }]}
-              >
-                <Input.Password
-                  size="large"
-                  prefix={<LockOutlined />}
-                  placeholder="••••••••"
-                  autoComplete="current-password"
-                />
-              </Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                size="large"
-                block
-                loading={loading}
-                className="login-page__submit"
-              >
-                Entrar al dashboard
-              </Button>
-            </Form>
+                  block
+                  loading={loading}
+                  className="login-page__submit"
+                >
+                  Entrar al dashboard
+                </Button>
+              </Form>
+            </div>
 
             <div className="login-page__demos">
               <Text className="login-page__demos-label">Cuentas de demostración</Text>
@@ -162,6 +164,7 @@ export default function Login() {
                   <button
                     key={account.id}
                     type="button"
+                    data-tour={account.role === 'admin' ? 'demo-admin' : 'demo-user'}
                     className={`login-page__demo-card login-page__demo-card--${account.role}`}
                     onClick={() => fillAccount(account)}
                   >

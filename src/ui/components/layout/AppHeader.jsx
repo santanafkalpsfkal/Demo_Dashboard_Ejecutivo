@@ -109,7 +109,7 @@ export default function AppHeader({ onOpenMenu }) {
             onClick={onOpenMenu}
           />
         )}
-        <div>
+        <div data-tour="header-greeting">
           <Typography.Title level={4} className="app-header-exec__greet">
             {getGreeting()}
             {user?.name ? `, ${user.name.split(' ')[0]}` : ''}
@@ -126,22 +126,25 @@ export default function AppHeader({ onOpenMenu }) {
           prefix={<SearchOutlined />}
           placeholder="Buscar indicadores, clientes, reportes..."
           className="app-header-exec__search"
+          data-tour="header-search"
         />
 
-        <Dropdown
-          dropdownRender={() => notifContent}
-          trigger={['click']}
-          open={notifOpen}
-          onOpenChange={setNotifOpen}
-          placement="bottomRight"
-        >
-          <Badge count={unread} size="small">
-            <Button type="text" className="app-header-exec__icon-btn" icon={<BellOutlined />} />
-          </Badge>
-        </Dropdown>
+        <span data-tour="header-notifications">
+          <Dropdown
+            dropdownRender={() => notifContent}
+            trigger={['click']}
+            open={notifOpen}
+            onOpenChange={setNotifOpen}
+            placement="bottomRight"
+          >
+            <Badge count={unread} size="small">
+              <Button type="text" className="app-header-exec__icon-btn" icon={<BellOutlined />} />
+            </Badge>
+          </Dropdown>
+        </span>
 
         <Dropdown menu={{ items: menuItems, onClick: onMenu }} placement="bottomRight" trigger={['click']}>
-          <button type="button" className="app-header-exec__profile">
+          <button type="button" className="app-header-exec__profile" data-tour="header-profile">
             <Avatar size={36} icon={<UserOutlined />} style={{ background: user?.role === 'admin' ? '#1677ff' : '#0ea5e9' }} />
             <div className="app-header-exec__profile-text">
               <span className="name">{user?.name || 'Ejecutivo'}</span>

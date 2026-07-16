@@ -48,7 +48,7 @@ export default function Operations() {
   ];
 
   return (
-    <div className="module-page">
+    <div className="module-page" data-tour="page-operations">
       <PageHeader
         title="Operaciones"
         subtitle="Procesos, estado, cumplimiento, riesgos y capacidad instalada."

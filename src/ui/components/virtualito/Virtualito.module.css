@@ -1,0 +1,236 @@
+/* ── Virtualito · SCKora Systems ── */
+/* Paleta propia del asistente (independiente del selector de temas del demo) */
+
+.avatarBtn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: linear-gradient(145deg, #0b1220 0%, #16233f 100%);
+  box-shadow: 0 8px 28px rgba(8, 15, 30, 0.55), 0 0 0 1px rgba(96, 165, 250, 0.35), 0 0 32px rgba(56, 189, 248, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: vlFloat 4s ease-in-out infinite;
+}
+.avatarBtn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 32px rgba(8, 15, 30, 0.6), 0 0 0 1px rgba(96, 165, 250, 0.5), 0 0 40px rgba(56, 189, 248, 0.4);
+}
+.avatarBtnPulse::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(56, 189, 248, 0.55);
+  animation: vlPulseRing 1.8s ease-out infinite;
+}
+.avatarImg { width: 42px; height: 42px; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4)); }
+
+@keyframes vlFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes vlPulseRing {
+  0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.55); opacity: 1; }
+  100% { box-shadow: 0 0 0 14px rgba(56, 189, 248, 0); opacity: 0; }
+}
+
+/* ── Peek bubble (mensaje corto, sin abrir el panel) ── */
+.peekBubble {
+  position: fixed;
+  bottom: 108px;
+  right: 32px;
+  max-width: 280px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 16px 16px 4px 16px;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(148, 197, 253, 0.22);
+  box-shadow: 0 12px 36px rgba(2, 6, 23, 0.45);
+  color: #eaf2ff;
+  z-index: 9999;
+  animation: vlBubbleIn 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.peekIcon { font-size: 20px; line-height: 1; flex-shrink: 0; }
+.peekTextWrap { display: flex; flex-direction: column; gap: 2px; }
+.peekTitle { font-size: 12px; font-weight: 800; color: #7dd3fc; letter-spacing: 0.02em; margin: 0; }
+.peekText { font-size: 12.5px; color: rgba(234, 242, 255, 0.88); line-height: 1.4; margin: 0; }
+
+@keyframes vlBubbleIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Panel de chat (glassmorphism premium) ── */
+.panel {
+  position: fixed;
+  bottom: 108px;
+  right: 32px;
+  width: 366px;
+  max-height: min(560px, calc(100vh - 150px));
+  display: flex;
+  flex-direction: column;
+  border-radius: 22px;
+  overflow: hidden;
+  background: linear-gradient(165deg, rgba(11, 18, 32, 0.86) 0%, rgba(16, 26, 45, 0.9) 100%);
+  backdrop-filter: blur(24px) saturate(170%);
+  -webkit-backdrop-filter: blur(24px) saturate(170%);
+  border: 1px solid rgba(148, 197, 253, 0.18);
+  box-shadow: 0 24px 64px rgba(2, 6, 23, 0.55), 0 0 0 1px rgba(56, 189, 248, 0.08);
+  z-index: 9999;
+  animation: vlPanelIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  color: #eaf2ff;
+}
+
+@keyframes vlPanelIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 14px;
+  border-bottom: 1px solid rgba(148, 197, 253, 0.14);
+  background: rgba(56, 189, 248, 0.05);
+}
+.headerAvatarWrap { position: relative; flex-shrink: 0; }
+.headerAvatar { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.06); object-fit: contain; padding: 3px; }
+.onlineDot {
+  position: absolute; bottom: -1px; right: -1px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #22c55e; border: 2px solid #0b1220;
+}
+.headerInfo { flex: 1; min-width: 0; }
+.headerName { font-size: 14px; font-weight: 800; margin: 0; color: #fff; }
+.headerSub { font-size: 11px; margin: 0; color: rgba(234, 242, 255, 0.55); }
+.closeBtn, .skipBtn {
+  background: rgba(255,255,255,0.06); border: none; color: rgba(234,242,255,0.75);
+  border-radius: 8px; cursor: pointer; transition: background 0.15s;
+}
+.closeBtn { width: 28px; height: 28px; font-size: 13px; flex-shrink: 0; }
+.skipBtn { padding: 6px 10px; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.closeBtn:hover, .skipBtn:hover { background: rgba(255,255,255,0.14); }
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 160px;
+}
+
+.msgRow { display: flex; gap: 8px; align-items: flex-end; }
+.msgRowUser { flex-direction: row-reverse; }
+.msgAvatar { width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,0.08); object-fit: contain; padding: 2px; flex-shrink: 0; }
+
+.bubble {
+  max-width: 78%;
+  padding: 9px 12px;
+  border-radius: 14px;
+  font-size: 13.2px;
+  line-height: 1.5;
+  position: relative;
+}
+.bubble p { margin: 0; white-space: pre-wrap; }
+.bubbleBot { background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(148, 197, 253, 0.14); border-bottom-left-radius: 4px; }
+.bubbleUser {
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.msgTime { display: block; margin-top: 3px; font-size: 9.5px; opacity: 0.55; text-align: right; }
+
+.typingBubble { display: flex; align-items: center; gap: 4px; padding: 11px 14px; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(234,242,255,0.6); animation: vlTyping 1.2s infinite ease-in-out; }
+.dot:nth-child(2) { animation-delay: 0.18s; }
+.dot:nth-child(3) { animation-delay: 0.36s; }
+@keyframes vlTyping { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-4px); opacity: 1; } }
+
+/* Skeleton (carga inicial del chat) */
+.skeletonRow { display: flex; gap: 8px; align-items: center; }
+.skeletonAvatar { width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,0.08); flex-shrink: 0; animation: vlShimmer 1.4s infinite; }
+.skeletonBubble { height: 30px; border-radius: 14px; background: rgba(255,255,255,0.08); animation: vlShimmer 1.4s infinite; }
+@keyframes vlShimmer { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+
+.quickReplies {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 10px 14px 0;
+}
+.quickBtn {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(148, 197, 253, 0.18);
+  color: #cfe4ff; border-radius: 999px; padding: 6px 11px; font-size: 11.5px; font-weight: 600;
+  cursor: pointer; transition: all 0.15s;
+}
+.quickBtn:hover { background: rgba(56, 189, 248, 0.16); border-color: rgba(56, 189, 248, 0.4); }
+
+.inputRow { display: flex; gap: 8px; padding: 12px 14px 14px; }
+.input {
+  flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(148, 197, 253, 0.18);
+  border-radius: 999px; padding: 10px 14px; font-size: 13px; color: #fff; outline: none;
+  transition: border-color 0.15s;
+}
+.input::placeholder { color: rgba(234,242,255,0.4); }
+.input:focus { border-color: rgba(56, 189, 248, 0.55); }
+.sendBtn {
+  width: 38px; height: 38px; border-radius: 50%; border: none; flex-shrink: 0;
+  background: linear-gradient(135deg, #2563eb, #38bdf8); color: #fff; font-size: 14px;
+  cursor: pointer; transition: transform 0.15s;
+}
+.sendBtn:hover { transform: scale(1.06); }
+
+/* ── Product Tour ── */
+.tourBar { padding: 10px 14px 14px; border-top: 1px solid rgba(148, 197, 253, 0.14); }
+.tourProgress { display: flex; gap: 5px; justify-content: center; margin-bottom: 10px; }
+.tourDot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.18); transition: all 0.2s; }
+.tourDotActive { background: #38bdf8; width: 16px; border-radius: 3px; }
+.tourActions { display: flex; justify-content: space-between; gap: 8px; }
+.tourBtnGhost {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(148, 197, 253, 0.16);
+  color: rgba(234,242,255,0.75); border-radius: 999px; padding: 8px 14px; font-size: 12px; font-weight: 700;
+  cursor: pointer; transition: all 0.15s;
+}
+.tourBtnGhost:disabled { opacity: 0.35; cursor: not-allowed; }
+.tourBtnGhost:not(:disabled):hover { background: rgba(255,255,255,0.12); }
+.tourBtnPrimary {
+  flex: 1; background: linear-gradient(135deg, #2563eb, #38bdf8); color: #fff; border: none;
+  border-radius: 999px; padding: 9px 14px; font-size: 12.5px; font-weight: 800; cursor: pointer;
+  transition: transform 0.15s; box-shadow: 0 6px 18px rgba(56, 189, 248, 0.3);
+}
+.tourBtnPrimary:hover { transform: translateY(-1px); }
+
+/* ── Highlight (spotlight, sin bloquear la pantalla) ── */
+.highlight {
+  position: fixed;
+  border-radius: 12px;
+  border: 2px solid #38bdf8;
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.28), 0 0 0 9999px rgba(2, 6, 23, 0.5);
+  pointer-events: none;
+  z-index: 9998;
+  transition: top 0.35s ease, left 0.35s ease, width 0.35s ease, height 0.35s ease;
+}
+
+@media (max-width: 480px) {
+  .panel, .peekBubble { right: 12px; left: 12px; width: auto; max-width: none; }
+  .avatarBtn { right: 16px; bottom: 24px; }
+  .peekBubble { bottom: 96px; }
+  .panel { bottom: 96px; }
+}

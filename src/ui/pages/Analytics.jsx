@@ -22,7 +22,7 @@ import './module.css';
 
 export default function Analytics() {
   return (
-    <div className="module-page">
+    <div className="module-page" data-tour="page-analytics">
       <PageHeader
         title="Analítica"
         subtitle="Tendencias, comparativos, rankings y mapas de calor para decisión ejecutiva."
