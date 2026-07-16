@@ -109,7 +109,7 @@ export default function AppHeader({ onOpenMenu }) {
             onClick={onOpenMenu}
           />
         )}
-        <div data-tour="header-greeting">
+        <div className="app-header-exec__greeting" data-tour="header-greeting">
           <Typography.Title level={4} className="app-header-exec__greet">
             {getGreeting()}
             {user?.name ? `, ${user.name.split(' ')[0]}` : ''}

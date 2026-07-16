@@ -16,6 +16,7 @@ import KPIs from '../ui/pages/KPIs';
 import Reports from '../ui/pages/Reports';
 import Settings from '../ui/pages/Settings';
 import Profile from '../ui/pages/Profile';
+import Virtualito from '../ui/components/virtualito/Virtualito';
 
 function useStoredUser() {
   const [ready, setReady] = useState(false);
@@ -61,10 +62,16 @@ const PublicOnlyRoute = ({ children }) => {
   return children;
 };
 
+function RootRedirect() {
+  const { user, ready } = useStoredUser();
+  if (!ready) return null;
+  return <Navigate to={user ? '/dashboard' : '/login'} replace />;
+}
+
 const Router = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/" element={<RootRedirect />} />
       <Route path="/login" element={<PublicOnlyRoute><Login /></PublicOnlyRoute>} />
 
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
@@ -86,8 +93,9 @@ const Router = () => (
       <Route path="/admin" element={<Navigate to="/settings" replace />} />
       <Route path="/about" element={<Navigate to="/dashboard" replace />} />
 
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<RootRedirect />} />
     </Routes>
+    <Virtualito />
   </BrowserRouter>
 );
 

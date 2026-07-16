@@ -31,6 +31,17 @@ npm run dev
 
 Abre `http://localhost:5173/login`.
 
+## Despliegue en Vercel
+
+El proyecto es una SPA (React + Vite). El archivo `vercel.json` configura:
+
+- Build: `npm run build` → carpeta `dist`
+- Rewrites: todas las rutas (`/login`, `/dashboard`, etc.) sirven `index.html`
+
+**No requiere backend** en Vercel: las cuentas demo funcionan 100% en el cliente.
+
+Tras conectar el repo en Vercel, el despliegue debe abrir directamente en `/login`.
+
 ## Stack
 
 React + Vite · Ant Design · Chart.js · React Router

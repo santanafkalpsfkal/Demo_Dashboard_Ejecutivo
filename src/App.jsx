@@ -2,7 +2,6 @@ import React from 'react';
 import { AuthProvider } from './data/AuthContext';
 import { ThemeProvider } from './theme/ThemeContext';
 import Router from './router';
-import Virtualito from './ui/components/virtualito/Virtualito';
 import 'antd/dist/reset.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +11,6 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <Router />
-        <Virtualito />
         <ToastContainer
           position="top-right"
           autoClose={3500}
