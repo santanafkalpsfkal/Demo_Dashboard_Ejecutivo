@@ -32,10 +32,8 @@ export default function Login() {
       const result = await userServices.login(values.email, values.password);
       if (result?.success && result?.user) {
         toast.success(`Bienvenido, ${result.user.name}`);
-        setTimeout(() => {
-          setLoading(false);
-          navigate('/dashboard', { replace: true });
-        }, 400);
+        setLoading(false);
+        navigate('/dashboard', { replace: true });
         return;
       }
       const msg = result?.error || result?.message || 'Credenciales incorrectas';

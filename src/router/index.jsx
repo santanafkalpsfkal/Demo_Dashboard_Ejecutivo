@@ -1,8 +1,9 @@
 // src/router/index.jsx
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { userServices } from '../services/userServices';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { useAppSession } from '../hooks/useAppSession';
 import DashboardLayout from '../ui/components/layout/DashboardLayout';
+import RouteBoot from '../ui/components/common/RouteBoot';
 
 import Login from '../ui/pages/Login';
 import Dashboard from '../ui/pages/Dashboard';
@@ -18,53 +19,27 @@ import Settings from '../ui/pages/Settings';
 import Profile from '../ui/pages/Profile';
 import Virtualito from '../ui/components/virtualito/Virtualito';
 
-function useStoredUser() {
-  const [ready, setReady] = useState(false);
-  const [user, setUser] = useState(null);
-
-  const read = () => {
-    try {
-      setUser(userServices.getCurrentUser());
-    } catch {
-      setUser(null);
-    }
-  };
-
-  useEffect(() => {
-    read();
-    setReady(true);
-    const onStorage = (e) => {
-      if (e.key === 'userData' || e.key === 'authToken') read();
-    };
-    const onSessionChanged = () => read();
-    window.addEventListener('storage', onStorage);
-    window.addEventListener('session-changed', onSessionChanged);
-    return () => {
-      window.removeEventListener('storage', onStorage);
-      window.removeEventListener('session-changed', onSessionChanged);
-    };
-  }, []);
-
-  return { user, ready };
+function ProtectedLayout() {
+  const { user, ready } = useAppSession();
+  if (!ready) return <RouteBoot />;
+  if (!user) return <Navigate to="/login" replace />;
+  return (
+    <DashboardLayout>
+      <Outlet />
+    </DashboardLayout>
+  );
 }
 
-const ProtectedRoute = ({ children }) => {
-  const { user, ready } = useStoredUser();
-  if (!ready) return null;
-  if (!user) return <Navigate to="/login" replace />;
-  return <DashboardLayout>{children}</DashboardLayout>;
-};
-
-const PublicOnlyRoute = ({ children }) => {
-  const { user, ready } = useStoredUser();
-  if (!ready) return null;
+function PublicOnlyLayout() {
+  const { user, ready } = useAppSession();
+  if (!ready) return <RouteBoot />;
   if (user) return <Navigate to="/dashboard" replace />;
-  return children;
-};
+  return <Outlet />;
+}
 
 function RootRedirect() {
-  const { user, ready } = useStoredUser();
-  if (!ready) return null;
+  const { user, ready } = useAppSession();
+  if (!ready) return <RouteBoot />;
   return <Navigate to={user ? '/dashboard' : '/login'} replace />;
 }
 
@@ -72,19 +47,24 @@ const Router = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<RootRedirect />} />
-      <Route path="/login" element={<PublicOnlyRoute><Login /></PublicOnlyRoute>} />
 
-      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-      <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
-      <Route path="/sales" element={<ProtectedRoute><Sales /></ProtectedRoute>} />
-      <Route path="/clients" element={<ProtectedRoute><Clients /></ProtectedRoute>} />
-      <Route path="/finance" element={<ProtectedRoute><Finance /></ProtectedRoute>} />
-      <Route path="/hr" element={<ProtectedRoute><HR /></ProtectedRoute>} />
-      <Route path="/operations" element={<ProtectedRoute><Operations /></ProtectedRoute>} />
-      <Route path="/kpis" element={<ProtectedRoute><KPIs /></ProtectedRoute>} />
-      <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
-      <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      <Route element={<PublicOnlyLayout />}>
+        <Route path="/login" element={<Login />} />
+      </Route>
+
+      <Route element={<ProtectedLayout />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/analytics" element={<Analytics />} />
+        <Route path="/sales" element={<Sales />} />
+        <Route path="/clients" element={<Clients />} />
+        <Route path="/finance" element={<Finance />} />
+        <Route path="/hr" element={<HR />} />
+        <Route path="/operations" element={<Operations />} />
+        <Route path="/kpis" element={<KPIs />} />
+        <Route path="/reports" element={<Reports />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/profile" element={<Profile />} />
+      </Route>
 
       {/* Compatibilidad: redirigir rutas antiguas */}
       <Route path="/home" element={<Navigate to="/dashboard" replace />} />

@@ -112,21 +112,28 @@ export default function Virtualito() {
     wasTourActiveRef.current = tourActive;
   }, [tourActive]);
 
+  // Navegar solo al cambiar de paso del tour (no al navegar manualmente el usuario)
+  useEffect(() => {
+    if (!tourActive) return;
+    const step = tourSteps[tourIndex];
+    if (!step) return;
+    if (step.path === '/settings' && !getIsAdmin()) {
+      useVirtualitoStore.getState().nextTourStep();
+      return;
+    }
+    if (step.path !== location.pathname) {
+      navigate(step.path);
+    }
+  }, [tourActive, tourIndex, tourSteps, navigate]);
+
   useEffect(() => {
     if (!tourActive) {
       setHighlightRect(null);
       return;
     }
     const step = tourSteps[tourIndex];
-    if (!step) return;
-
-    if (step.path !== location.pathname) {
-      // Usuario no-admin no puede ir a settings
-      if (step.path === '/settings' && !getIsAdmin()) {
-        useVirtualitoStore.getState().nextTourStep();
-        return;
-      }
-      navigate(step.path);
+    if (!step || step.path !== location.pathname) {
+      setHighlightRect(null);
       return;
     }
 
@@ -155,7 +162,7 @@ export default function Virtualito() {
     };
     raf = requestAnimationFrame(measure);
     return () => raf && cancelAnimationFrame(raf);
-  }, [tourActive, tourIndex, tourSteps, location.pathname, navigate, setTheme]);
+  }, [tourActive, tourIndex, tourSteps, location.pathname, setTheme]);
 
   useEffect(() => {
     if (!tourActive) return;
